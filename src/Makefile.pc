@@ -1,0 +1,18 @@
+TARGET := ../bin/mqtt_door
+CC := gcc
+
+INCLUDE:= -I ../include 
+
+LIBS:= -lpaho-mqtt3a -lsqlite3 -lpthread -ldl
+
+CSRCS := $(wildcard *.c)
+OBJS := $(patsubst %.c, %.o, $(CSRCS))
+
+$(TARGET): $(OBJS) 
+	$(CC) $+ -o $@  $(LIBS) 
+%.o:%.c
+	$(CC) -c -g $< -o $@ $(INCLUDE)
+
+clean:
+	rm -rf $(OBJS) $(TARGET)
+	#rm *.o
